@@ -30,7 +30,7 @@ Este documento estabelece as especificações de design do projeto **Harry Potte
 
 ### 1.1. Conceito Central (*High Concept*)
 
-**Harry Potter Battlegrounds** é uma experiência imersiva em primeira pessoa centrada na conjuração mágica por interação física direta. A premissa fundamental consiste em exigir que o jogador execute movimentos específicos com a varinha empunhada na mão — associados à intenção de disparo e à referência visual — para produzir feitiços distintos e observar reações específicas no ambiente virtual.
+**Harry Potter Battlegrounds** é uma experiência imersiva em primeira pessoa em que o jogador traça feitiços no ar com uma varinha, pronuncia palavras de conjuração e aponta a varinha para lançar feitiços e observar suas reações no ambiente virtual.
 
 ### 1.2. Escopo do MVP — Campo de Treinamento
 
@@ -40,8 +40,8 @@ Para garantir profundidade técnica e solidez na mecânica principal antes da in
 - **Alvo Dedicado (Boneco de Palha):** Um boneco de palha (*training dummy*) posicionado à frente do jogador funciona como receptor principal das magias lançadas.
 - **Ciclo Principal (*Core Loop*):**
   1. O jogador consulta ou recorda o traçado do feitiço desejado.
-  2. Desenha o movimento específico no espaço com a varinha na mão dominante (podendo combinar com o comando verbal associado).
-  3. Lança o feitiço em direção ao boneco de palha, utilizando a direção visual do olhar como referência de mira.
+  2. Desenha o movimento específico no espaço com a varinha na mão dominante e pronuncia as palavras de conjuração.
+  3. Lança o feitiço a partir da ponta da varinha, na direção em que ela estiver apontada.
   4. O boneco de palha apresenta uma resposta física e visual compatível com o feitiço acertado, permitindo ao jogador validar precisão e efeito.
 
 ### 1.3. Diretriz de Priorização e Evolução Incremental
@@ -82,12 +82,15 @@ A imagem apresenta a atualização de interação por voz. Na demonstração do 
 
 A entrada principal do MVP baseia-se no reconhecimento geométrico e cinemático do movimento realizado com a mão da varinha:
 
+**Regra de conjuração.** Todo feitiço exige o uso da varinha para traçar o padrão correspondente e efetuar o lançamento.
+
 1. **Desenho Gestual:** O jogador traça o padrão específico correspondente a cada feitiço utilizando o controlador ou rastreamento da mão que segura a varinha.
-2. **Suporte Multimodal (Voz e Olhar):** O disparo pode incorporar a pronúncia das palavras do feitiço e utiliza a direção dada pelos olhos do jogador (*eye-tracking* ou direção da câmera como alternativa técnica) para determinar a trajetória de lançamento.
-3. **Feedback de Reconhecimento:** Ao concluir o traçado válido, o sistema emite o efeito visual e sonoro da magia na ponta da varinha e projeta o feitiço na direção apontada.
+2. **Comando de Voz:** O MVP reconhece as palavras pronunciadas pelo jogador e as associa ao feitiço correspondente durante a conjuração.
+3. **Mira:** A direção inicial de lançamento segue uma linha que parte da ponta da varinha e acompanha a orientação da varinha no momento do lançamento. A câmera acompanha a cabeça de forma independente da mira.
+4. **Feedback de Conjuração:** Ao reconhecer o traçado válido e atender às condições de conjuração, o sistema emite o efeito visual e sonoro da magia na ponta da varinha e projeta o feitiço na direção indicada pela mira.
 
 > [!NOTE]
-> As tolerâncias do algoritmo de reconhecimento de traçado, a eventual obrigatoriedade ou opcionalidade do comando de voz no MVP e o catálogo inicial de feitiços de treino serão detalhados na especificação técnica e na matriz de feitiços.
+> As tolerâncias do reconhecimento de traçado, as palavras de conjuração e o catálogo inicial de feitiços de treino serão detalhados na especificação técnica e na matriz de feitiços.
 
 ### 2.2. Alvo de Treinamento (Boneco de Palha) e Reações Específicas
 
@@ -160,10 +163,11 @@ Adição do **Modo de Batalha** sobre a base do sistema de conjuração, contemp
 | ID | Requisito Funcional | Critério de Verificação |
 | :--- | :--- | :--- |
 | **RF-MVP-01** | Campo de Treinamento com boneco de palha | O jogador inicia em um cenário de treinamento contendo um boneco de palha posicionado à sua frente como alvo funcional. |
-| **RF-MVP-02** | Desenho e reconhecimento do movimento da varinha | O sistema detecta o movimento específico executado pela mão da varinha (e o comando verbal, quando habilitado) e identifica o feitiço correspondente. |
-| **RF-MVP-03** | Lançamento direcionado e reação específica no alvo | O feitiço é lançado na direção do olhar do jogador e, ao atingir o boneco de palha, desencadeia a reação física e visual específica associada à magia conjurada. |
+| **RF-MVP-02** | Desenho e reconhecimento do movimento da varinha | O sistema exige um traçado válido com a varinha para identificar e lançar o feitiço. |
+| **RF-MVP-03** | Lançamento direcionado e reação específica no alvo | O feitiço parte da ponta da varinha na direção em que ela aponta, inclusive quando o jogador olha para outro ponto. Ao atingir o boneco de palha, desencadeia a reação física e visual associada. |
 | **RF-MVP-04** | Grimório diegético com troca livre de páginas | A mão secundária exibe o grimório aberto com os movimentos de cada feitiço e permite trocar páginas livremente, sem impedir a conjuração de feitiços de outras páginas. |
 | **RF-MVP-05** | Locomoção base no campo de treino | O jogador movimenta o personagem pelo campo de treinamento por meio do *joystick* em visão em primeira pessoa. |
+| **RF-MVP-06** | Reconhecimento de voz na conjuração | Durante a conjuração, o sistema reconhece as palavras pronunciadas pelo jogador e as associa ao feitiço correspondente. |
 
 ### 4.2. Requisitos do Backlog (Prioridade Secundária — Expansão Futura)
 
