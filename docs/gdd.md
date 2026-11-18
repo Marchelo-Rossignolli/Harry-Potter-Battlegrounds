@@ -1,158 +1,150 @@
 # Game Design Document (GDD) — Harry Potter Battlegrounds
 
-Este documento consolida a concepção inicial do projeto **Harry Potter Battlegrounds**, desenvolvido no contexto da Eletiva de Experiências Imersivas do Inteli (2026), estabelecendo os pilares de jogabilidade, controles imersivos, sistemas de combate mágico, interação ambiental, interface e requisitos funcionais verificáveis que orientarão a implementação.
+Este documento estabelece as especificações de design do projeto **Harry Potter Battlegrounds**, desenvolvido no contexto da Eletiva de Experiências Imersivas do Inteli (2026). A arquitetura funcional do jogo é organizada em duas frentes complementares: o **Escopo do Produto Mínimo Viável (MVP)**, focado na validação do ciclo central de desenho gestual e lançamento de feitiços em campo de treinamento, e o **Backlog de Evolução**, que consolida as mecânicas de combate em tempo real para desenvolvimento incremental conforme a disponibilidade de cronograma.
 
 ## Sumário
 
-- [1. Visão Geral do Projeto](#1-visão-geral-do-projeto)
+- [1. Visão Geral e Recorte de Escopo](#1-visão-geral-e-recorte-de-escopo)
   - [1.1. Conceito Central (*High Concept*)](#11-conceito-central-high-concept)
-  - [1.2. Modos de Jogo](#12-modos-de-jogo)
-- [2. Mecânicas de Controle, Locomoção e Imersão Física](#2-mecânicas-de-controle-locomoção-e-imersão-física)
-  - [2.1. Lançamento Multimodal de Feitiços](#21-lançamento-multimodal-de-feitiços)
-  - [2.2. Locomoção Híbrida e Esquiva Física](#22-locomoção-híbrida-e-esquiva-física)
-  - [2.3. Mobilidade Tática (*Dash*)](#23-mobilidade-tática-dash)
-- [3. Sistema de Combate e Magia](#3-sistema-de-combate-e-magia)
-  - [3.1. Categorias Funcionais de Feitiços](#31-categorias-funcionais-de-feitiços)
-  - [3.2. Combinação Simultânea de Feitiços](#32-combinação-simultânea-de-feitiços)
-  - [3.3. Interação entre Feitiços Opositores](#33-interação-entre-feitiços-opositores)
-  - [3.4. Sistema de Proteção (*Protego*) e Recarga Ativa](#34-sistema-de-proteção-protego-e-recarga-ativa)
-- [4. Interação Ambiental e Destrutibilidade](#4-interação-ambiental-e-destrutibilidade)
-  - [4.1. Manipulação de Cenário em Combate](#41-manipulação-de-cenário-em-combate)
-- [5. Interface do Usuário (HUD/UI Diegética) e Recursos](#5-interface-do-usuário-hudui-diegética-e-recursos)
-  - [5.1. Medidores de Recursos do Jogador](#51-medidores-de-recursos-do-jogador)
-  - [5.2. Grimório na Mão Secundária](#52-grimório-na-mão-secundária)
-- [6. Matriz de Requisitos Funcionais do Gameplay](#6-matriz-de-requisitos-funcionais-do-gameplay)
+  - [1.2. Escopo do MVP — Campo de Treinamento](#12-escopo-do-mvp--campo-de-treinamento)
+  - [1.3. Diretriz de Priorização e Evolução Incremental](#13-diretriz-de-priorização-e-evolução-incremental)
+- [2. Mecânicas Centrais do MVP (*Core Loop*)](#2-mecânicas-centrais-do-mvp-core-loop)
+  - [2.1. Conjuração por Movimento da Varinha (Desenho do Feitiço)](#21-conjuração-por-movimento-da-varinha-desenho-do-feitiço)
+  - [2.2. Alvo de Treinamento (Boneco de Palha) e Reações Específicas](#22-alvo-de-treinamento-boneco-de-palha-e-reações-específicas)
+  - [2.3. Grimório Diegético na Mão Secundária](#23-grimório-diegético-na-mão-secundária)
+  - [2.4. Posicionamento e Controle Base](#24-posicionamento-e-controle-base)
+- [3. Backlog de Evolução (Funcionalidades Pós-MVP)](#3-backlog-de-evolução-funcionalidades-pós-mvp)
+  - [3.1. Combinação e Criação de Feitiços e Interação entre Opositores](#31-combinação-e-criação-de-feitiços-e-interação-entre-opositores)
+  - [3.2. Mobilidade e Defesa de Combate (*Dash*, *Protego* e Esquiva Física)](#32-mobilidade-e-defesa-de-combate-dash-protego-e-esquiva-física)
+  - [3.3. Recursos de Combate (Medidores de Vida, *Protego* e *Dash*)](#33-recursos-de-combate-medidores-de-vida-protego-e-dash)
+  - [3.4. Interação Ambiental de Arena](#34-interação-ambiental-de-arena)
+  - [3.5. Modo de Batalha em Tempo Real (PvP e PvE)](#35-modo-de-batalha-em-tempo-real-pvp-e-pve)
+- [4. Matriz de Requisitos e Priorização](#4-matriz-de-requisitos-e-priorização)
+  - [4.1. Requisitos Funcionais do MVP (Prioridade Alta — Escopo Atual)](#41-requisitos-funcionais-do-mvp-prioridade-alta--escopo-atual)
+  - [4.2. Requisitos do Backlog (Prioridade Secundária — Expansão Futura)](#42-requisitos-do-backlog-prioridade-secundária--expansão-futura)
 
 ---
 
-## 1. Visão Geral do Projeto
+## 1. Visão Geral e Recorte de Escopo
 
 ### 1.1. Conceito Central (*High Concept*)
 
-**Harry Potter Battlegrounds** é uma experiência imersiva de combate mágico baseada em interação física e verbal direta. A premissa central consiste em exigir do jogador a execução de movimentos corporais e manuais específicos, combinados à pronúncia de comandos verbais, para desencadear reações mágicas específicas no ambiente virtual.
+**Harry Potter Battlegrounds** é uma experiência imersiva em primeira pessoa centrada na conjuração mágica por interação física direta. A premissa fundamental consiste em exigir que o jogador execute movimentos específicos com a varinha empunhada na mão — associados à intenção de disparo e à referência visual — para produzir feitiços distintos e observar reações específicas no ambiente virtual.
 
-Ao substituir comandos abstratos de botões por gestos manuais com a varinha, comandos de voz, direcionamento pelo olhar e esquiva física, o jogo busca aproximar a resposta sistêmica da fantasia de um duelo bruxo em primeira pessoa.
+### 1.2. Escopo do MVP — Campo de Treinamento
 
-### 1.2. Modos de Jogo
+Para garantir profundidade técnica e solidez na mecânica principal antes da introdução de sistemas competitivos complexos, o escopo inicial do projeto concentra-se integralmente no **Campo de Treino (*Training Ground*)**:
 
-A estrutura inicial do jogo prevê dois modos principais, voltados respectivamente ao aprendizado das mecânicas e ao confronto competitivo ou contra inteligência artificial:
+- **Cenário Controlado:** Um ambiente de treinamento fechado ou delimitado, estruturado para calibração de gestos, leitura espacial e feedback sensorial imediato.
+- **Alvo Dedicado (Boneco de Palha):** Um boneco de palha (*training dummy*) posicionado à frente do jogador funciona como receptor principal das magias lançadas.
+- **Ciclo Principal (*Core Loop*):**
+  1. O jogador consulta ou recorda o traçado do feitiço desejado.
+  2. Desenha o movimento específico no espaço com a varinha na mão dominante (podendo combinar com o comando verbal associado).
+  3. Lança o feitiço em direção ao boneco de palha, utilizando a direção visual do olhar como referência de mira.
+  4. O boneco de palha apresenta uma resposta física e visual compatível com o feitiço acertado, permitindo ao jogador validar precisão e efeito.
 
-| Modo | Finalidade | Escopo Funcional |
-| :--- | :--- | :--- |
-| **Campo de Treino (*Training Ground*)** | Prática livre e calibração de execução | Ambiente controlado no qual o jogador pode treinar os movimentos de varinha, testar comandos verbais e observar as reações e efeitos individuais ou combinados dos feitiços sem pressão competitiva. |
-| **Modo de Batalha (*Battle Mode*)** | Combate direto em arena | Confrontos entre duelistas em cenário interativo, com possibilidade de seleção entre **Jogador vs. Jogador (PvP)** e **Jogador vs. CPU (PvE)**. |
+### 1.3. Diretriz de Priorização e Evolução Incremental
+
+A estratégia de entrega adota construção incremental sobre uma base validada: primeiro consolida-se a captura confiável do movimento da varinha, o disparo direcionado e as reações distintas no boneco de palha; somente após a estabilização desse núcleo passam a ser incorporados os módulos de duelo em tempo real, defesa ativa, mobilidade tática, criação/combinação avançada de feitiços e suporte *multiplayer* listados na Seção 3.
 
 ---
 
-## 2. Mecânicas de Controle, Locomoção e Imersão Física
+## 2. Mecânicas Centrais do MVP (*Core Loop*)
 
-### 2.1. Lançamento Multimodal de Feitiços
+### 2.1. Conjuração por Movimento da Varinha (Desenho do Feitiço)
 
-O acionamento de cada magia depende de uma entrada multimodal composta por dois sinais simultâneos ou sequenciais validados pelo sistema, somados a um vetor de mira baseado na percepção visual do usuário:
+A entrada principal do MVP baseia-se no reconhecimento geométrico e cinemático do movimento realizado com a mão da varinha:
 
-1. **Entrada Gestual (Mão da Varinha):** O jogador deve executar o padrão de movimento específico associado ao feitiço desejado utilizando a mão que empunha a varinha.
-2. **Entrada Verbal (Voz):** O jogador deve pronunciar as palavras correspondentes ao feitiço.
-3. **Direcionamento pelo Olhar (*Eye-Tracking* / Direção Visual):** Uma vez reconhecidos o gesto e o comando verbal, o feitiço é lançado ao longo do vetor definido pela direção dos olhos do jogador no instante do disparo.
+1. **Desenho Gestual:** O jogador traça o padrão específico correspondente a cada feitiço utilizando o controlador ou rastreamento da mão que segura a varinha.
+2. **Suporte Multimodal (Voz e Olhar):** O disparo pode incorporar a pronúncia das palavras do feitiço e utiliza a direção dada pelos olhos do jogador (*eye-tracking* ou direção da câmera como alternativa técnica) para determinar a trajetória de lançamento.
+3. **Feedback de Reconhecimento:** Ao concluir o traçado válido, o sistema emite o efeito visual e sonoro da magia na ponta da varinha e projeta o feitiço na direção apontada.
 
 > [!NOTE]
-> A especificação detalhada de tolerância de reconhecimento gestual, dicionário fonético/acústico dos feitiços e método de captura do olhar (rastreamento ocular nativo ou vetor frontal da câmera como alternativa de *fallback*) será definida na etapa de arquitetura técnica.
+> As tolerâncias do algoritmo de reconhecimento de traçado, a eventual obrigatoriedade ou opcionalidade do comando de voz no MVP e o catálogo inicial de feitiços de treino serão detalhados na especificação técnica e na matriz de feitiços.
 
-### 2.2. Locomoção Híbrida e Esquiva Física
+### 2.2. Alvo de Treinamento (Boneco de Palha) e Reações Específicas
 
-A movimentação do personagem adota um modelo híbrido que separa o deslocamento macro pela arena da evasão reativa de curto alcance:
+O boneco de palha atua como ponto focal de validação das mecânicas do MVP, devendo responder de forma diferenciada e legível a cada feitiço implementado:
 
-- **Deslocamento pelo Cenário:** O corpo do personagem é movimentado pelo espaço da arena por meio do *joystick* do controle.
-- **Esquiva Física de Ataques na Cabeça:** Ataques direcionados à altura da cabeça do jogador exigem reação corporal real, permitindo a evasão por meio do deslocamento físico do tronco e da cabeça no espaço rastreado, sem depender exclusivamente do *joystick*.
+- **Reações Físicas:** Oscilação por impacto, repulsão, queda ou estabilização após o golpe.
+- **Reações Elementais e de Estado:** Efeitos visuais específicos na superfície ou estrutura do boneco (por exemplo, combustão/chamuscamento, congelamento, atordoamento ou marcas de energia mágica), garantindo que movimentos diferentes causem consequências perceptivelmente distintas.
 
-### 2.3. Mobilidade Tática (*Dash*)
+### 2.3. Grimório Diegético na Mão Secundária
 
-Complementando a locomoção contínua via *joystick* e a esquiva física de cabeça, o jogador dispõe de um **dash lateral**, destinado a reposicionamentos rápidos, quebra de linha de visão e evasão de projéteis ou efeitos de área. A disponibilidade dessa manobra é governada pelo Medidor de *Dash*.
+Na mão oposta à que empunha a varinha, o jogador carrega um **grimório aberto** como elemento diegético de auxílio:
+
+- **Guia Visual de Traçado:** As páginas exibem os movimentos específicos exigidos para desenhar cada feitiço disponível no campo de treinamento.
+- **Troca Livre de Páginas:** O jogador pode folhear o grimório para consultar diferentes feitiços a qualquer momento.
+- **Conjuração Desacoplada:** A execução de um feitiço não fica condicionada à página aberta; o jogador pode desenhar e lançar qualquer feitiço conhecido independentemente da página exibida no momento.
+
+### 2.4. Posicionamento e Controle Base
+
+O deslocamento pelo campo de treinamento ocorre por meio do *joystick* para ajuste de distância e ângulo em relação ao boneco de palha, mantendo a câmera em primeira pessoa alinhada à movimentação física natural da cabeça no ambiente imersivo.
 
 ---
 
-## 3. Sistema de Combate e Magia
+## 3. Backlog de Evolução (Funcionalidades Pós-MVP)
 
-### 3.1. Categorias Funcionais de Feitiços
+As funcionalidades a seguir compõem a visão expandida do projeto e permanecem preservadas em *backlog*, com implementação condicionada à conclusão prévia do MVP e à disponibilidade de tempo no cronograma da disciplina.
 
-O arsenal mágico não se restringe a projéteis de dano direto. Os feitiços são estruturados em categorias funcionais complementares para estimular decisões táticas durante o duelo:
+### 3.1. Combinação e Criação de Feitiços e Interação entre Opositores
 
-| Categoria | Papel no Combate |
+- **Combinação e Criação de Feitiços:** Capacidade de combinar os efeitos de mais de um feitiço simultaneamente ou compor variações mágicas a partir de propriedades acumuladas.
+- **Arsenal Multicategoria:** Expansão dos feitiços para além do ataque direto, incorporando categorias dedicadas a defesa, mobilidade e aplicação de efeitos táticos diversos.
+- **Interação entre Feitiços Opositores:** Resolução sistêmica quando feitiços de naturezas contrárias colidem em trajetória (por exemplo, um feitiço de fogo sendo apagado ao ser interceptado por um feitiço de água).
+
+### 3.2. Mobilidade e Defesa de Combate (*Dash*, *Protego* e Esquiva Física)
+
+- ***Dash* Lateral:** Manobra rápida de deslocamento lateral para evasão de projéteis e reposicionamento em duelo.
+- **Esquiva Física de Cabeça:** Desvio corporal físico do jogador no espaço rastreado para evitar ataques direcionados à altura da cabeça, enquanto o *joystick* controla a locomoção geral do corpo.
+- **Feitiço de Proteção (*Protego*) e Recarga Ativa:** Escudo defensivo com limite máximo de utilizações consecutivas; ao ultrapassar esse limite, entra em tempo de recarga (*cooldown*). Acertar feitiços no oponente reduz ativamente o tempo restante de recarga do *Protego*.
+
+### 3.3. Recursos de Combate (Medidores de Vida, *Protego* e *Dash*)
+
+Para sustentar duelos competitivos, a interface passará a incluir três medidores operacionais dedicados:
+
+| Medidor | Finalidade no Backlog |
 | :--- | :--- |
-| **Ataque Direto** | Feitiços ofensivos direcionados ao oponente ou a pontos vulneráveis do cenário. |
-| **Defesa** | Feitiços destinados à interceptação, bloqueio ou mitigação de ataques recebidos (com destaque para o *Protego*). |
-| **Mobilidade** | Feitiços voltados ao deslocamento, reposicionamento rápido ou alteração dinâmica de alcance na arena. |
-| **Efeitos Diversos e Controle** | Feitiços com propriedades utilitárias, de controle de espaço, alteração de terreno ou aplicação de estados combináveis com outras magias. |
+| **Medidor de Vida** | Controle de integridade dos duelistas e condição de vitória/derrota em batalha. |
+| **Medidor de *Protego* (Escudo)** | Controle de cargas restantes de proteção e contagem regressiva de *cooldown*. |
+| **Medidor de *Dash*** | Controle de disponibilidade para execução do *dash* lateral. |
 
-### 3.2. Combinação Simultânea de Feitiços
+### 3.4. Interação Ambiental de Arena
 
-O sistema permite que o jogador **combine os efeitos de mais de um feitiço ao mesmo tempo**. Em vez de restringir o combate a ações isoladas em sequência rígida, os efeitos ativos podem coexistir ou se compor para gerar resultados emergentes no duelo (por exemplo, combinando efeito de controle/terreno com ataque ou mobilidade). As regras formais de composição, limites de empilhamento e catálogo de sinergias deverão ser especificadas na matriz de feitiços em iterações futuras.
+Evolução do cenário de treinamento estático para arenas interativas em que os feitiços afetam elementos estruturais contra o adversário:
 
-### 3.3. Interação entre Feitiços Opositores
+- **Derrubada de Pilastras:** Colapso físico de estruturas para bloquear linhas de visão ou atingir o oponente.
+- **Queima de Estruturas:** Propagação de fogo em elementos inflamáveis do local.
+- **Alteração de Terreno:** Modificação do piso para tornar áreas difíceis de navegar e restringir o deslocamento inimigo.
 
-Quando feitiços lançados entram em trajetória de colisão, suas propriedades elementais ou funcionais interagem diretamente entre si antes de atingir um alvo. Feitiços de naturezas opostas podem se neutralizar ou modificar mutuamente:
+### 3.5. Modo de Batalha em Tempo Real (PvP e PvE)
 
-- **Caso de referência:** Um feitiço de **fogo** interceptado por um feitiço de **água** é apagado pela colisão.
+Adição do **Modo de Batalha** sobre a base do sistema de conjuração, contemplando duas modalidades de confronto em tempo real:
 
-Essa mecânica estabelece contra-respostas ativas em tempo real, permitindo utilizar feitiços ofensivos ou ambientais também como ferramenta de anulação tática.
-
-### 3.4. Sistema de Proteção (*Protego*) e Recarga Ativa
-
-O feitiço defensivo **Protego** é regido por uma mecânica de gerenciamento de risco e recompensa que incentiva a ofensiva:
-
-1. **Limite de Usos:** A conjuração de proteção possui uma quantidade máxima de utilizações disponíveis antes de se esgotar (monitorada pelo Medidor de *Protego*).
-2. **Penalidade por Esgotamento (*Cooldown*):** Ao ultrapassar o limite de usos permitidos, o escudo entra em estado de recarga (*cooldown*), ficando temporariamente indisponível.
-3. **Recarga Ativa por Acerto:** Acertar feitiços contra o oponente reduz ativamente o tempo de recarga restante do *Protego*, recompensando a precisão e evitando duelos excessivamente passivos.
+- **Jogador vs. Jogador (PvP / *Multiplayer*):** Duelos em rede ou arena compartilhada entre dois participantes.
+- **Jogador vs. CPU (PvE):** Duelos contra oponente controlado por inteligência artificial.
 
 ---
 
-## 4. Interação Ambiental e Destrutibilidade
+## 4. Matriz de Requisitos e Priorização
 
-### 4.1. Manipulação de Cenário em Combate
-
-As arenas de batalha são concebidas como espaços dinâmicos e reativos ao uso da magia. O jogador pode direcionar feitiços diretamente contra elementos do cenário para obter vantagem tática sobre o oponente, contemplando ao menos três classes de interação ambiental:
-
-- **Colapso Estrutural:** Derrubar pilastras e elementos arquitetônicos para obstruir passagens ou atingir o adversário.
-- **Combustão de Estruturas:** Queimar partes inflamáveis da estrutura do local, alterando a cobertura disponível e criando zonas de risco.
-- **Degradação do Terreno:** Modificar o solo com feitiços para tornar o terreno difícil de navegar, restringindo a mobilidade e o posicionamento do oponente.
-
----
-
-## 5. Interface do Usuário (HUD/UI Diegética) e Recursos
-
-### 5.1. Medidores de Recursos do Jogador
-
-Para manter o jogador informado sobre sua condição física, capacidade defensiva e mobilidade sem comprometer a imersão, o sistema disponibiliza três medidores fundamentais:
-
-| Medidor | Função |
-| :--- | :--- |
-| **Medidor de Vida** | Representa a integridade do personagem e determina a condição de vitória ou derrota no modo de batalha. |
-| **Medidor de *Protego* (Escudo)** | Indica os usos restantes da magia defensiva e, quando esgotado, exibe o progresso do tempo de recarga (*cooldown*). |
-| **Medidor de *Dash*** | Indica a disponibilidade ou carga disponível para execução do *dash* lateral. |
-
-### 5.2. Grimório na Mão Secundária
-
-A assistência ao jogador é integrada de forma diegética na mão que não empunha a varinha:
-
-- **Referência Visual em Tempo Real:** O jogador segura um **grimório aberto** na mão secundária, exibindo o desenho/instrução do movimento específico necessário para cada feitiço.
-- **Navegação Livre por Páginas:** O jogador pode folhear e trocar as páginas do grimório para consultar diferentes feitiços durante a experiência.
-- **Execução Independente da Página Ativa:** A página exibida no grimório funciona apenas como guia de consulta; o jogador pode conjurar qualquer feitiço conhecido independentemente de qual página esteja aberta no momento.
-
----
-
-## 6. Matriz de Requisitos Funcionais do Gameplay
-
-A tabela a seguir converte as definições conceituais deste GDD em requisitos funcionais verificáveis para o desenvolvimento e a validação técnica do projeto:
+### 4.1. Requisitos Funcionais do MVP (Prioridade Alta — Escopo Atual)
 
 | ID | Requisito Funcional | Critério de Verificação |
 | :--- | :--- | :--- |
-| **RF-01** | Reconhecimento multimodal para conjuração | O sistema dispara o feitiço correspondente somente quando reconhece a combinação válida do gesto manual específico com a varinha e da palavra pronunciada pelo jogador. |
-| **RF-02** | Direcionamento de disparo pelo olhar | A trajetória inicial do feitiço lançado alinha-se ao vetor de direção visual definido pelos olhos do jogador no momento da conjuração. |
-| **RF-03** | Locomoção híbrida e esquiva física de cabeça | O *joystick* desloca o personagem pela arena enquanto o deslocamento físico da cabeça do jogador retira a caixa de colisão craniana da trajetória de ataques altos. |
-| **RF-04** | *Dash* lateral com controle de recurso | O acionamento do *dash* desloca o jogador lateralmente de forma rápida e consome carga do Medidor de *Dash*, bloqueando novos acionamentos quando o recurso estiver indisponível. |
-| **RF-05** | Arsenal mágico multicategoria | O sistema implementa feitiços categorizados em ataque direto, defesa, mobilidade e efeitos adicionais de suporte/controle. |
-| **RF-06** | Combinação simultânea de efeitos mágicos | O sistema permite que efeitos de dois ou mais feitiços permaneçam ativos e combinados simultaneamente sem cancelamento indevido. |
-| **RF-07** | Colisão e interação entre feitiços opositores | Quando dois feitiços de propriedades opostas colidem em voo ou área ativa, ocorre interação determinística entre eles (ex.: feitiço de água apaga feitiço de fogo). |
-| **RF-08** | Limite de *Protego* e recarga ativa por acerto | Ultrapassar o limite de usos do *Protego* aciona seu *cooldown* no medidor correspondente; cada acerto de feitiço contra o oponente reduz o tempo restante desse *cooldown*. |
-| **RF-09** | Destrutibilidade e alteração tática do cenário | Feitiços aplicados ao ambiente derrubam pilastras, queimam estruturas inflamáveis e convertem áreas em terreno de navegação dificultada, afetando o combate contra o oponente. |
-| **RF-10** | Medidores de estado e grimório diegético não restritivo | A interface exibe os medidores de Vida, *Protego* e *Dash*; a mão secundária exibe o grimório aberto com troca de páginas funcional, mantendo todos os feitiços conjuráveis independentemente da página aberta. |
-| **RF-11** | Modos de Campo de Treino e Batalha (PvP e PvE) | O jogo oferece um Campo de Treino para prática livre de gestos e efeitos, além de um Modo de Batalha selecionável entre **Jogador vs. Jogador** e **Jogador vs. CPU**. |
+| **RF-MVP-01** | Campo de Treinamento com boneco de palha | O jogador inicia em um cenário de treinamento contendo um boneco de palha posicionado à sua frente como alvo funcional. |
+| **RF-MVP-02** | Desenho e reconhecimento do movimento da varinha | O sistema detecta o movimento específico executado pela mão da varinha (e o comando verbal, quando habilitado) e identifica o feitiço correspondente. |
+| **RF-MVP-03** | Lançamento direcionado e reação específica no alvo | O feitiço é lançado na direção do olhar do jogador e, ao atingir o boneco de palha, desencadeia a reação física e visual específica associada à magia conjurada. |
+| **RF-MVP-04** | Grimório diegético com troca livre de páginas | A mão secundária exibe o grimório aberto com os movimentos de cada feitiço e permite trocar páginas livremente, sem impedir a conjuração de feitiços de outras páginas. |
+| **RF-MVP-05** | Locomoção base no campo de treino | O jogador movimenta o personagem pelo campo de treinamento por meio do *joystick* em visão em primeira pessoa. |
+
+### 4.2. Requisitos do Backlog (Prioridade Secundária — Expansão Futura)
+
+| ID | Requisito Funcional | Critério de Verificação |
+| :--- | :--- | :--- |
+| **RF-BKL-01** | Categorias estendidas, criação e combinação de feitiços | O sistema suporta feitiços de defesa, mobilidade e controle, além da combinação simultânea ou criação de efeitos compostos entre múltiplas magias. |
+| **RF-BKL-02** | Colisão entre feitiços opositores | Feitiços de propriedades contrárias interagem ao se interceptarem (ex.: feitiço de água apaga feitiço de fogo). |
+| **RF-BKL-03** | *Dash* lateral e esquiva física de cabeça | O jogador executa *dash* lateral pelo controle e evita ataques direcionados à cabeça por meio do deslocamento físico real. |
+| **RF-BKL-04** | Sistema *Protego* com limite e recarga ativa | O escudo entra em *cooldown* ao exceder seu limite de usos e tem o tempo restante reduzido a cada feitiço acertado no oponente. |
+| **RF-BKL-05** | Medidores de combate e destrutibilidade de arena | A interface exibe os medidores de Vida, *Protego* e *Dash*; feitiços aplicados ao cenário derrubam pilastras, queimam estruturas e dificultam a navegação do terreno. |
+| **RF-BKL-06** | Modo de Batalha em tempo real (PvP e PvE) | O jogo disponibiliza confrontos em tempo real selecionáveis entre **Jogador vs. Jogador (*Multiplayer*)** e **Jogador vs. CPU**. |
