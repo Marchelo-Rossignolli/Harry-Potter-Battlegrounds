@@ -1,16 +1,23 @@
 # Colaboração no Harry Potter Battlegrounds
 
-Marcelo trabalha com Codex e Gemini Antigravity neste repositório. A comunicação entre sessões ocorre pelos arquivos versionados do projeto.
+Marcelo trabalha com Codex e Gemini Antigravity neste repositório. A coordenação de tarefas entre sessões ocorre pelo [Planning no GitHub Projects](https://github.com/users/Marchelo-Rossignolli/projects/1) (Projeto `#1` de `Marchelo-Rossignolli`), operado via GitHub CLI (`gh`), e o contexto técnico permanece nos arquivos versionados do repositório.
 
 ## Protocolo de coordenação entre agentes
 
-1. Ao iniciar ou retomar uma tarefa, leia [o quadro de trabalho](.agents/coordenacao.md) e confira a branch e as alterações locais com `git status --short --branch`.
-2. Para mudanças no projeto, registre no quadro o objetivo, o responsável, os arquivos previstos e como verificar o resultado. Se a tarefa já existir, atualize a mesma linha. Consultas rápidas dispensam esse registro.
-3. Antes de editar, confira se outro agente assumiu os mesmos arquivos. Combine a divisão com Marcelo quando houver sobreposição e preserve alterações de terceiros. Para duas implementações simultâneas, utilize branches em *worktrees* distintas.
-4. Ao concluir ou pausar, atualize a linha correspondente em [.agents/coordenacao.md](.agents/coordenacao.md) com o resultado, a verificação realizada e a próxima ação. Se houver dúvida que altere o escopo, registre a pergunta para Marcelo.
-5. Consulte [o GDD](docs/gdd.md) para o escopo oficial do jogo e [as notas das aulas](.agents/memoria-aulas-imersao.md) para o contexto teórico e técnico da disciplina. Quando Marcelo aprovar uma decisão de design, atualize a seção correspondente do GDD e referencie-a no quadro.
+1. Ao iniciar ou retomar uma tarefa, consulte o quadro no GitHub Projects com `gh project item-list 1 --owner Marchelo-Rossignolli --format json` (em sessões no Windows sem `gh` no `PATH`, use `C:\Program Files\GitHub CLI\gh.exe`) e confira a branch e as alterações locais com `git status --short --branch`.
+2. Para mudanças no projeto, assuma o cartão existente (ou crie um novo via `gh project item-create 1 --owner Marchelo-Rossignolli --title "..." --body "..."`), usando o prefixo de responsável no título (`Codex · ...`, `Gemini · ...` ou `Marcelo, Codex e Gemini · ...`), registrando objetivo, arquivos previstos e critério de verificação, e mova `Status` para `In progress`. Consultas rápidas dispensam registro.
+3. Antes de editar, confira nos cartões em `In progress` se o outro agente assumiu os mesmos arquivos. Combine a divisão com Marcelo quando houver sobreposição e preserve alterações de terceiros. Para duas implementações simultâneas, utilize branches em *worktrees* distintas.
+4. Ao concluir ou pausar, atualize o cartão (descrição do `DraftIssue` ou comentário na Issue vinculada) com os arquivos alterados, a branch ou o commit de referência, a verificação realizada (distinguindo o que foi testado no computador do que foi testado no dispositivo) e a próxima ação ou dúvida para Marcelo. Ao concluir, mova `Status` para `Done`.
+5. Consulte [o GDD](docs/gdd.md) para o escopo oficial do jogo e [as notas das aulas](.agents/memoria-aulas-imersao.md) para o contexto teórico e técnico da disciplina. Quando Marcelo aprovar uma decisão de design, atualize a seção correspondente do GDD e referencie-a no cartão.
+6. **Autonomia no GitHub Projects:** Marcelo autoriza os agentes a criar/atualizar cartões e mover `Status` no Projeto `#1` autonomamente. Essa autorização não altera a trava obrigatória de Git abaixo.
 
-Na mesma pasta de trabalho, releia [.agents/coordenacao.md](.agents/coordenacao.md) antes de salvá-lo para incorporar atualizações do outro agente. Em cópias ou *worktrees* diferentes, as atualizações chegam pela integração no Git; combine a divisão das tarefas na base comum antes de abrir as branches.
+**Referência rápida do Projeto `#1` (`Planning`):**
+- Owner: `Marchelo-Rossignolli` | Project ID: `PVT_kwHOCXULj84BsWoj`
+- Campo `Status`: `PVTSSF_lAHOCXULj84BsWojzhqlK3I` (`Todo`: `f75ad846`, `In progress`: `47fc9ee4`, `Done`: `98236657`)
+- Mover `Status`: `gh project item-edit --id <PVTI_...> --project-id PVT_kwHOCXULj84BsWoj --field-id PVTSSF_lAHOCXULj84BsWojzhqlK3I --single-select-option-id <OPTION_ID>`
+- Editar título/descrição de `DraftIssue` (`content.id`): `gh project item-edit --id <DI_...> --title "..." --body "..."`
+
+O arquivo [.agents/coordenacao.md](.agents/coordenacao.md) foi mantido apenas como registro histórico encerrado da Semana 1 e não deve receber novas tarefas.
 
 ## Trava obrigatória de Git e versionamento
 
