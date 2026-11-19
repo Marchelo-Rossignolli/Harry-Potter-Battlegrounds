@@ -2,6 +2,8 @@
 
 Este documento estabelece as especificações de design do projeto **Harry Potter Battlegrounds**, desenvolvido no contexto da Eletiva de Experiências Imersivas do Inteli (2026). A arquitetura funcional do jogo é organizada em duas frentes complementares: o **Escopo do Produto Mínimo Viável (MVP)**, focado na validação do ciclo central de desenho gestual e lançamento de feitiços em campo de treinamento, e o **Backlog de Evolução**, que consolida as mecânicas de combate em tempo real para desenvolvimento incremental conforme a disponibilidade de cronograma.
 
+[Ficha do Projeto](ficha-do-projeto.md)
+
 ## Sumário
 
 - [1. Visão Geral e Recorte de Escopo](#1-visão-geral-e-recorte-de-escopo)
@@ -72,7 +74,7 @@ O grimório aberto exibe *Magic Missile* enquanto o projétil segue em direção
 
 ![Anel mágico sobre um pedestal na oficina, em imagem de divulgação da atualização de interação por voz.](https://storage.ghost.io/c/2a/2f/2a2f38f0-4b71-407a-9c7e-18a9e2541980/content/images/2021/12/Aldin-Reality-Ring-Voice.jpg)
 
-A imagem apresenta a atualização de interação por voz. Na demonstração do estúdio, é possível ouvir o comando e observar a mudança que ele provoca no ambiente. Ao pronunciar um feitiço durante o gesto da varinha, o jogador deve poder perceber a consequência de suas palavras na trajetória da magia e na reação do alvo. [Fonte da imagem · UploadVR](https://www.uploadvr.com/waltz-of-the-wizard-voice-interactions/) · [Demonstração dos poderes de voz · Aldin](https://www.youtube.com/watch?v=OvWaiuMWG6M) · [Página oficial na Steam](https://store.steampowered.com/app/1094390/Waltz_of_the_Wizard/)
+A imagem apresenta a atualização de interação por voz. Na demonstração do estúdio, é possível ouvir o comando e observar a mudança que ele provoca no ambiente. Essa sequência orienta o eixo *Sentir* do HPB. Ao pronunciar um feitiço durante o gesto da varinha, o jogador deve poder perceber a consequência de suas palavras na trajetória da magia e na reação do alvo. [Fonte da imagem · UploadVR](https://www.uploadvr.com/waltz-of-the-wizard-voice-interactions/) · [Demonstração dos poderes de voz · Aldin](https://www.youtube.com/watch?v=OvWaiuMWG6M) · [Página oficial na Steam](https://store.steampowered.com/app/1094390/Waltz_of_the_Wizard/)
 
 ---
 
@@ -91,6 +93,8 @@ A entrada principal do MVP baseia-se no reconhecimento geométrico e cinemático
 
 > [!NOTE]
 > As tolerâncias do reconhecimento de traçado, as palavras de conjuração e o catálogo inicial de feitiços de treino serão detalhados na especificação técnica e na matriz de feitiços.
+
+A apresentação visual da mira está descrita no [eixo Moldura da Ficha do Projeto](ficha-do-projeto.md#moldura).
 
 ### 2.2. Alvo de Treinamento (Boneco de Palha) e Reações Específicas
 
