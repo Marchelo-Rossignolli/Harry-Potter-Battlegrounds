@@ -1,0 +1,7 @@
+﻿{$HPB_HOST:localhost} {
+	tls internal
+	root * ./src
+	@modelos path *.glb
+	header @modelos Content-Type model/gltf-binary
+	file_server
+}
