@@ -1,0 +1,6 @@
+# Arquivos de integracao gerados automaticamente pelo Facade Code
+.agents/plugins/facade/
+.agents/skills/facade/
+
+# Gravacoes brutas de video (documentacao usa capturas PNG extraidas)
+docs/assets/*.mp4

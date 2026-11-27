@@ -1,0 +1,68 @@
+:root {
+  color-scheme: dark;
+  font-family: "Segoe UI", sans-serif;
+}
+
+aside {
+  position: fixed;
+  z-index: 2;
+  top: 1rem;
+  left: 1rem;
+  max-width: calc(100% - 4rem);
+  color: #f8f4e6;
+  background: #1a302ff2;
+  border-top: 3px solid #d3ac69;
+  border-radius: 3px;
+  padding: 0.85rem 1.1rem 1rem;
+}
+
+h1 {
+  margin: 0;
+  font: normal 1.55rem Georgia, serif;
+}
+
+p { margin: 0.35rem 0 0.8rem; font-size: 0.88rem; }
+aside div { display: flex; gap: 0.65rem; flex-wrap: wrap; align-items: center; }
+label { font-size: 0.85rem; }
+select, button {
+  border: 1px solid #94a49b;
+  border-radius: 3px;
+  background: #294543;
+  color: inherit;
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 0.35rem 0.5rem;
+}
+button { cursor: pointer; }
+
+button:disabled { cursor: default; opacity: 0.5; }
+#fire-spell:not(:disabled) { border-color: #d3ac69; background: #5a4424; }
+#spell-status { margin: 0.6rem 0 0; color: #efbf71; }
+.atalhos { margin: 0 0 0.6rem; padding: 0; list-style: none; font-size: 0.8rem; line-height: 1.55; }
+kbd {
+  border: 1px solid #94a49b;
+  border-radius: 3px;
+  padding: 0 0.3rem;
+  font: inherit;
+  font-size: 0.75rem;
+  background: #294543;
+}
+.tracados {
+  display: grid;
+  grid-template-columns: repeat(4, 4.2rem);
+  gap: 0.4rem;
+  margin: 0 0 0.75rem;
+  padding: 0;
+  list-style: none;
+  font-size: 0.7rem;
+  text-align: center;
+}
+.tracados img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  border-radius: 3px;
+  background: #f8f4e6;
+}
+a-scene.desenhando { cursor: crosshair; }

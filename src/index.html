@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Campo de treino · Harry Potter Battlegrounds</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="campo.css">
+  <script src="https://aframe.io/releases/1.8.0/aframe.min.js"></script>
+  <script src="js/components/carregamento-cenario.js"></script>
+  <script src="js/components/tracado-varinha.js"></script>
+  <script src="js/components/efeitos-feiticos.js"></script>
+  <script src="js/components/alvo-boneco.js"></script>
+  <script src="js/components/controle-varinha.js"></script>
+  <script src="js/components/tracado-mesa.js"></script>
+</head>
+<body>
+  <aside aria-label="Controles do campo de treino">
+    <h1>Campo de treino</h1>
+    <p>No Quest, segure o gatilho para desenhar, solte para preparar e aperte o Grip ou toque no gatilho para disparar.</p>
+    <ul class="atalhos" aria-label="Controles no computador">
+      <li><kbd>Botão direito</kbd> ou <kbd>Shift</kbd>+<kbd>arrastar</kbd> desenha</li>
+      <li><kbd>Arrastar</kbd> olha · <kbd>Setas</kbd> giram a varinha</li>
+      <li><kbd>Espaço</kbd> ou clique direito dispara</li>
+    </ul>
+    <ol class="tracados" aria-label="Traçados dos feitiços">
+      <li><img src="assets/textures/tracados/levioso.png" alt="">Levioso</li>
+      <li><img src="assets/textures/tracados/bombarda.png" alt="">Bombarda</li>
+      <li><img src="assets/textures/tracados/crucio.png" alt="">Crucio</li>
+      <li><img src="assets/textures/tracados/expelliarmus.png" alt="">Expelliarmus</li>
+    </ol>
+    <div>
+      <label>Mão
+        <select id="handedness">
+          <option value="right">Direita</option>
+          <option value="left">Esquerda</option>
+        </select>
+      </label>
+      <button type="button" id="reset-wand">Mirar no boneco</button>
+      <button type="button" id="fire-spell" disabled>Disparar</button>
+    </div>
+    <p id="spell-status" role="status">Desenhe um feitiço.</p>
+    <p id="scene-loading" role="status">Carregando o cenário…</p>
+  </aside>
+  <a-scene background="color: #cbd8d2" fog="type: exponential; color: #ccd7d1; density: 0.024"
+           webxr="referenceSpaceType: local-floor" xr-mode-ui="enabled: false; XRMode: vr"
+           carregamento-cenario tracado-varinha tracado-mesa efeitos-feiticos>
+    <a-assets>
+      <a-asset-item id="courtyard-model" src="assets/models/patio-de-treino.glb"></a-asset-item>
+      <a-asset-item id="dummy-model" src="assets/models/boneco-de-palha.glb"></a-asset-item>
+      <a-asset-item id="wand-model" src="assets/models/varinha.glb"></a-asset-item>
+      <a-mixin id="marker-post" geometry="primitive: cylinder; radius: 0.035; height: 1.2" material="color: #615047"></a-mixin>
+      <a-mixin id="marker-orb" geometry="primitive: octahedron; radius: 0.12" material="color: #efbf71; metalness: 0.25; roughness: 0.55"></a-mixin>
+    </a-assets>
+    <a-entity light="type: hemisphere; color: #fff1d4; groundColor: #9faeb2; intensity: 1.75"></a-entity>
+    <a-entity position="-3 6 2" light="type: directional; color: #ffe3ae; intensity: 2.3"></a-entity>
+    <a-entity id="field-bounds" gltf-model="#courtyard-model"></a-entity>
+    <a-entity id="training-dummy" position="0 0 -4" gltf-model="#dummy-model" alvo-boneco></a-entity>
+    <a-entity position="-1.5 0 -4">
+      <a-entity class="obstaculo-feitico" mixin="marker-post" position="0 0.6 0"></a-entity>
+      <a-entity id="marker-left" class="obstaculo-feitico" mixin="marker-orb" position="0 1.2 0"></a-entity>
+    </a-entity>
+    <a-entity position="1.5 0 -4">
+      <a-entity class="obstaculo-feitico" mixin="marker-post" position="0 0.6 0"></a-entity>
+      <a-entity id="marker-right" class="obstaculo-feitico" mixin="marker-orb" position="0 1.2 0"></a-entity>
+    </a-entity>
+    <a-entity id="player-rig">
+      <a-entity id="head" position="0 1.6 0" camera="fov: 86" look-controls>
+        <a-entity id="controller-required" position="0 0.15 -1.4" visible="false">
+          <a-plane width="1.15" height="0.28" material="shader: flat; color: #1a302f; fog: false"></a-plane>
+          <a-text position="0 0 0.01" align="center" color="#f8f4e6" width="1.05" wrap-count="30"></a-text>
+        </a-entity>
+        <a-entity id="vr-menu" position="0 -0.36 -1.4" visible="false">
+          <a-plane width="1.4" height="0.68" material="shader: flat; color: #1a302f; fog: false"></a-plane>
+          <a-text position="0 0.245 0.01" align="center" color="#efbf71" width="1.28"
+                  wrap-count="40" value="Aperte o gatilho da mão que vai usar."></a-text>
+          <a-image src="assets/textures/tracados/levioso.png" position="-0.45 0.095 0.012" width="0.15" height="0.15"></a-image>
+          <a-text position="-0.45 -0.025 0.012" align="center" width="0.95" value="Levioso"></a-text>
+          <a-image src="assets/textures/tracados/bombarda.png" position="-0.15 0.095 0.012" width="0.15" height="0.15"></a-image>
+          <a-text position="-0.15 -0.025 0.012" align="center" width="0.95" value="Bombarda"></a-text>
+          <a-image src="assets/textures/tracados/crucio.png" position="0.15 0.095 0.012" width="0.15" height="0.15"></a-image>
+          <a-text position="0.15 -0.025 0.012" align="center" width="0.95" value="Crucio"></a-text>
+          <a-image src="assets/textures/tracados/expelliarmus.png" position="0.45 0.095 0.012" width="0.15" height="0.15"></a-image>
+          <a-text position="0.45 -0.025 0.012" align="center" width="0.95" value="Expelliarmus"></a-text>
+          <a-text position="0 -0.13 0.01" align="center" color="#f8f4e6" width="1.25"
+                  wrap-count="52" value="Segure o gatilho e desenhe. Solte, aponte e aperte o Grip ou toque no gatilho."></a-text>
+          <a-text position="0 -0.265 0.01" align="center" color="#efbf71" width="1.18"
+                  wrap-count="44" value="Reabrir: Menu ou Y no controle esquerdo."></a-text>
+        </a-entity>
+      </a-entity>
+      <a-entity id="wand-hand" controle-varinha>
+        <a-entity id="wand">
+          <a-entity id="grip" gltf-model="#wand-model"></a-entity>
+          <a-entity id="wand-tip" position="0 0 -0.35">
+            <a-entity id="aim-ray" line="start: 0 0 0; end: 0 0 -8; color: #fff1ac"></a-entity>
+          </a-entity>
+        </a-entity>
+      </a-entity>
+    </a-entity>
+  </a-scene>
+</body>
+</html>
