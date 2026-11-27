@@ -1,0 +1,223 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Campo de treino — planta baixa e corte longitudinal</title>
+  <desc id="desc">Pátio de 13 por 15,6 metros, com a frente (−Z) no alto da planta. O jogador fica na origem, sobre uma área rastreada de 2 por 2 metros. O boneco está 4 metros à frente, entre duas balizas a 1,50 metro de cada lado e a 20,6 graus em planta. No corte, os olhos ficam a 1,60 metro, o boneco mede 1,75 metro com o torso a 1,20 metro e o muro frontal, de 1,20 metro de altura, fica 6,40 metros além do boneco. A mira parte da ponta da varinha, 0,35 metro à frente da empunhadura.</desc>
+  <!--
+    Escalas (fonte: src/index.html e src/assets/models/patio-de-treino.glb):
+    - Planta X–Z: 40 unidades gráficas por metro; origem do jogador em (400, 696);
+      X cresce para a direita e −Z (frente) aponta para o alto.
+    - Corte Y–Z: escala isotrópica de 80 unidades gráficas por metro; Z = 0 em x = 1010 (boneco em x = 1330, muro em x = 1842),
+      piso (Y = 0) em y = 560; −Z cresce para a direita e Y para o alto.
+  -->
+  <defs>
+    <pattern id="grade" patternUnits="userSpaceOnUse" x="400" y="696" width="40" height="40">
+      <path d="M0 40V0H40" fill="none" stroke="#c3c9b6" stroke-width="1"/>
+    </pattern>
+    <pattern id="hachura" width="10" height="10" patternUnits="userSpaceOnUse">
+      <path d="M-1 1L1-1M0 10L10 0M9 11L11 9" fill="none" stroke="#69786b" stroke-width="1.2"/>
+    </pattern>
+    <style>
+      text { fill:#244238; font:24px 'Segoe UI',Arial,sans-serif }
+      .eyebrow { font:700 22px 'Segoe UI',Arial,sans-serif; letter-spacing:3px; fill:#466051 }
+      .display { font:60px Georgia,serif; letter-spacing:-1px }
+      .section { font:38px Georgia,serif }
+      .strong { font-weight:700 }
+      .minor { fill:#466051 }
+      .dim { font:700 24px 'Segoe UI',Arial,sans-serif; fill:#8a6233 }
+      .tick { font:22px Consolas,'Courier New',monospace; fill:#466051 }
+      .note { font:italic 24px Georgia,serif; fill:#466051 }
+      .foot { font:22px 'Segoe UI',Arial,sans-serif; fill:#466051 }
+      .dimline { fill:none; stroke:#97723f; stroke-width:2 }
+      .leader { fill:none; stroke:#6f8173; stroke-width:1.6 }
+      .axis { fill:none; stroke:#628674; stroke-width:1.6; stroke-dasharray:10 6 }
+    </style>
+  </defs>
+
+  <rect width="1920" height="1080" fill="#f8f6ed"/>
+
+  <!-- Cabeçalho -->
+  <path d="M60 22H1860" stroke="#244238" stroke-width="4"/>
+  <text x="64" y="62" class="eyebrow">HARRY POTTER BATTLEGROUNDS · PROVA DE CONCEITO</text>
+  <text x="62" y="124" class="display">Campo de treino</text>
+  <text x="1856" y="124" text-anchor="end" class="note" style="font-size:30px">Implantação e linhas de mira</text>
+  <path d="M60 150H1860" stroke="#a8b2a3" stroke-width="2"/>
+  <path d="M860 176V1000" stroke="#a8b2a3" stroke-width="2"/>
+
+  <!-- ============ PLANTA X–Z (40 u/m, origem em 400,696) ============ -->
+  <text x="64" y="196" class="eyebrow">PLANTA BAIXA · X–Z</text>
+  <text x="62" y="240" class="section">Implantação do pátio</text>
+
+  <!-- Entorno simplificado, além dos muros -->
+  <path d="M140 266l9-14 9 14Z" fill="#466051"/>
+  <text x="160" y="272" class="note" style="font-size:22px">Castelo e observatório</text>
+  <path d="M642 266l9-14 9 14Z" fill="#466051"/>
+  <text x="638" y="272" text-anchor="end" class="note" style="font-size:22px">Estande da Sonserina</text>
+  <path d="M28 640l14-9v18Z" fill="#466051"/>
+  <text x="44" y="566" transform="rotate(-90 44 566)" text-anchor="middle" class="note">Estufa</text>
+
+  <!-- Pátio 13 × 15,6 m: X −6,5..+6,5 → x 140..660; Z −10,4..+5,2 → y 280..904 -->
+  <rect x="140" y="280" width="520" height="624" fill="#e6ead8"/>
+  <rect x="140" y="280" width="520" height="624" fill="url(#grade)"/>
+  <rect x="140" y="280" width="520" height="624" fill="none" stroke="#466051" stroke-width="6"/>
+  <path d="M400 280V904M140 696H660" class="axis"/>
+
+  <!-- Cotas de Z (esquerda) -->
+  <path d="M132 280H142M132 536H142M132 696H142M132 904H142" stroke="#466051" stroke-width="2"/>
+  <text x="126" y="288" text-anchor="end" class="tick">−10,4</text>
+  <text x="126" y="544" text-anchor="end" class="tick">−4,0</text>
+  <text x="126" y="704" text-anchor="end" class="tick">0,0</text>
+  <text x="126" y="912" text-anchor="end" class="tick">+5,2</text>
+
+  <!-- Cone entre o jogador e as balizas (±20,6°) -->
+  <path d="M400 696 340 536H460Z" fill="#c0d1bd" opacity=".75"/>
+  <path d="M400 696 340 536M400 696 460 536" fill="none" stroke="#466051" stroke-width="2" stroke-dasharray="8 5"/>
+  <path d="M400 606A90 90 0 0 1 431.6 611.7" class="dimline"/>
+  <text x="446" y="626" class="dim">20,6°</text>
+
+  <!-- Linha de mira até o boneco -->
+  <path d="M400 682V548" stroke="#ae7731" stroke-width="4"/>
+
+  <!-- Área rastreada 2 × 2 m -->
+  <rect x="360" y="656" width="80" height="80" fill="#d2e2db" fill-opacity=".85" stroke="#244238" stroke-width="2.5" stroke-dasharray="8 5"/>
+  <path d="M364 730 330 768" class="leader"/>
+  <text x="324" y="792" text-anchor="end" class="strong">Área rastreada</text>
+  <text x="324" y="822" text-anchor="end" class="dim">2 × 2 m</text>
+
+  <!-- Jogador na origem -->
+  <circle cx="400" cy="696" r="14" fill="#244238"/>
+  <circle cx="400" cy="696" r="5" fill="#f8f6ed"/>
+  <path d="M412 704 470 744" class="leader"/>
+  <text x="476" y="752" class="strong">Jogador</text>
+  <text x="476" y="782" class="minor">origem (0, 0, 0)</text>
+
+  <!-- Balizas em (±1,5; Y 1,2; −4) -->
+  <path d="M340 524l12 12-12 12-12-12Z" fill="#ae7731" stroke="#785229" stroke-width="2"/>
+  <path d="M460 524l12 12-12 12-12-12Z" fill="#ae7731" stroke="#785229" stroke-width="2"/>
+  <path d="M326 530 290 498" class="leader"/>
+  <text x="284" y="474" text-anchor="end" class="strong">Balizas</text>
+  <text x="284" y="504" text-anchor="end" class="minor">Y = 1,20 m</text>
+
+  <!-- Boneco em (0, 0, −4) -->
+  <circle cx="400" cy="536" r="15" fill="#e3d2a9" stroke="#8b622d" stroke-width="2.5"/>
+  <circle cx="400" cy="536" r="6" fill="#a47233"/>
+  <path d="M412 548 480 584" class="leader"/>
+  <text x="486" y="594" class="strong">Boneco</text>
+
+  <!-- Cotas da planta -->
+  <path d="M340 516V488M400 516V488M460 516V488M340 496H460" class="dimline"/>
+  <text x="370" y="482" text-anchor="middle" class="dim">1,50</text>
+  <text x="430" y="482" text-anchor="middle" class="dim">1,50</text>
+  <path d="M296 536H262M296 696H262M270 536V696" class="dimline"/>
+  <rect x="226" y="598" width="88" height="34" fill="#e6ead8"/>
+  <text x="270" y="624" text-anchor="middle" class="dim">4,00 m</text>
+
+  <path d="M666 280H710M666 904H710M700 280V904" class="dimline"/>
+  <text x="728" y="592" transform="rotate(-90 728 592)" text-anchor="middle" class="dim">15,60 m</text>
+  <path d="M140 910V942M660 910V942M140 932H660" class="dimline"/>
+  <rect x="348" y="914" width="104" height="36" fill="#f8f6ed"/>
+  <text x="400" y="941" text-anchor="middle" class="dim">13,00 m</text>
+  <text x="140" y="972" text-anchor="middle" class="tick">X −6,5</text>
+  <text x="660" y="972" text-anchor="middle" class="tick">X +6,5</text>
+
+  <!-- Indicação da frente (−Z) -->
+  <g transform="translate(790 330)">
+    <path d="M0-42 16 4 0-6-16 4Z" fill="#244238"/>
+    <path d="M0-6V44" stroke="#244238" stroke-width="3"/>
+    <text x="0" y="80" text-anchor="middle" class="strong">Frente</text>
+    <text x="0" y="108" text-anchor="middle" class="tick">−Z</text>
+  </g>
+
+  <!-- Escala gráfica da planta: 2 m = 80 u -->
+  <g transform="translate(330 990)">
+    <path d="M0 0h40v10H0Z" fill="#244238"/><path d="M40 0h40v10H40Z" fill="#f8f6ed" stroke="#244238" stroke-width="2"/>
+    <text x="96" y="12" class="foot">0 · 1 · 2 m</text>
+  </g>
+
+  <!-- ============ CORTE Y–Z (80 u/m; Z 0 em x 1010; piso em y 560) ============ -->
+  <text x="904" y="196" class="eyebrow">CORTE LONGITUDINAL · Y–Z</text>
+  <text x="902" y="240" class="section">Da varinha ao alvo</text>
+
+  <!-- Piso -->
+  <path d="M930 560H1860v16H930Z" fill="url(#hachura)"/>
+  <path d="M930 560H1860" stroke="#244238" stroke-width="3"/>
+
+  <!-- Jogador: olhos a 1,60 m (y 432) -->
+  <rect x="998" y="454" width="24" height="106" rx="11" fill="#466051"/>
+  <circle cx="1010" cy="436" r="15" fill="#466051"/>
+  <circle cx="1016" cy="432" r="3.5" fill="#f8f6ed"/>
+  <path d="M1014 466 1042 460" stroke="#466051" stroke-width="7" stroke-linecap="round"/>
+  <!-- Varinha: empunhadura em x 1042, ponta 0,35 m à frente em x 1070 -->
+  <path d="M1036 460H1070" stroke="#785229" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="1042" cy="460" r="5" fill="#244238"/>
+  <circle cx="1070" cy="460" r="5" fill="#ae7731"/>
+  <text x="1010" y="402" text-anchor="middle" class="strong">Jogador</text>
+  <path d="M976 560H956M976 432H956M964 560V432" class="dimline"/>
+  <text x="950" y="504" text-anchor="end" class="dim">1,60 m</text>
+  <text x="950" y="532" text-anchor="end" class="foot">olhos</text>
+
+  <!-- Cota 0,35 m da varinha -->
+  <path d="M1042 450V430M1070 450V430M1042 438H1070" class="dimline"/>
+  <path d="M1070 438H1084" class="leader"/>
+  <text x="1090" y="430" class="dim">0,35 m</text>
+
+  <!-- Linha de mira: da ponta da varinha ao torso -->
+  <path d="M1070 460 1320 463.8" stroke="#ae7731" stroke-width="4"/>
+  <path d="M1320 463.8l-16-7v14Z" fill="#ae7731"/>
+  <text x="1190" y="500" text-anchor="middle" class="note">linha de mira</text>
+
+  <!-- Boneco: 1,75 m, torso a 1,20 m (y 464) -->
+  <path d="M1308 558H1352" stroke="#765539" stroke-width="5"/>
+  <path d="M1330 560V444" stroke="#765539" stroke-width="5"/>
+  <path d="M1300 452H1360" stroke="#765539" stroke-width="5" stroke-linecap="round"/>
+  <rect x="1314" y="444" width="32" height="46" rx="4" fill="#b48c53" stroke="#7b5c35" stroke-width="2"/>
+  <circle cx="1330" cy="432" r="12" fill="#d3b47b" stroke="#7b5c35" stroke-width="2"/>
+  <circle cx="1330" cy="464" r="7" fill="#81512b"/>
+  <text x="1330" y="402" text-anchor="middle" class="strong">Boneco</text>
+  <path d="M1366 560H1402M1360 420H1402M1392 560V420" class="dimline"/>
+  <text x="1408" y="504" class="dim">1,75 m</text>
+  <path d="M1366 464H1526M1516 560V464" class="dimline"/>
+  <text x="1532" y="522" class="dim">1,20 m</text>
+  <text x="1532" y="550" class="foot">torso</text>
+
+  <!-- Muro frontal: face interna em Z −10,4 (x 1842), 1,20 m (y 464) -->
+  <rect x="1842" y="464" width="16" height="96" fill="url(#hachura)" stroke="#466051" stroke-width="3"/>
+  <text x="1858" y="402" text-anchor="end" class="strong">Muro frontal</text>
+  <path d="M1836 464H1800M1810 560V464" class="dimline"/>
+  <text x="1796" y="522" text-anchor="end" class="dim">1,20 m</text>
+
+  <!-- Cotas horizontais -->
+  <path d="M1010 584V620M1330 584V620M1842 584V620M1010 608H1842" class="dimline"/>
+  <rect x="1120" y="590" width="100" height="34" fill="#f8f6ed"/>
+  <text x="1170" y="616" text-anchor="middle" class="dim">4,00 m</text>
+  <rect x="1536" y="590" width="100" height="34" fill="#f8f6ed"/>
+  <text x="1586" y="616" text-anchor="middle" class="dim">6,40 m</text>
+  <text x="1010" y="652" text-anchor="middle" class="tick">Z 0,0</text>
+  <text x="1330" y="652" text-anchor="middle" class="tick">Z −4,0</text>
+  <text x="1842" y="652" text-anchor="end" class="tick">Z −10,4</text>
+
+  <!-- Escala gráfica do corte: 1 m = 80 u -->
+  <g transform="translate(1420 668)">
+    <path d="M0 0h80v10H0Z" fill="#244238"/><path d="M80 0h80v10H80Z" fill="#f8f6ed" stroke="#244238" stroke-width="2"/>
+    <text x="176" y="12" class="foot">0 · 1 · 2 m</text>
+  </g>
+
+  <!-- Referências de calibração -->
+  <path d="M900 712H1860" stroke="#a8b2a3" stroke-width="2"/>
+  <text x="904" y="756" class="eyebrow">REFERÊNCIAS DE CALIBRAÇÃO · X / Y / Z EM METROS</text>
+  <text x="904" y="806" class="strong">Jogador</text>
+  <text x="1110" y="806" class="tick" style="font-size:24px">( 0,00 ; 0,00 ;  0,00)</text>
+  <text x="1470" y="806" class="minor">origem no piso · olhos a 1,60</text>
+  <text x="904" y="856" class="strong">Boneco</text>
+  <text x="1110" y="856" class="tick" style="font-size:24px">( 0,00 ; 0,00 ; −4,00)</text>
+  <text x="1470" y="856" class="minor">altura 1,75 · torso a 1,20</text>
+  <text x="904" y="906" class="strong">Balizas</text>
+  <text x="1110" y="906" class="tick" style="font-size:24px">(±1,50 ; 1,20 ; −4,00)</text>
+  <text x="1470" y="906" class="minor">±20,6° em planta</text>
+  <text x="904" y="956" class="strong">Ponta da varinha</text>
+  <text x="1110" y="956" class="tick" style="font-size:24px">0,35 após a empunhadura</text>
+  <text x="1470" y="956" class="minor">origem da linha de mira</text>
+
+  <!-- Rodapé -->
+  <path d="M60 1016H1860" stroke="#244238" stroke-width="2"/>
+  <text x="64" y="1052" class="foot">Medidas em metros · uma unidade de cena do A-Frame 1.8.0 corresponde a um metro</text>
+  <text x="1856" y="1052" text-anchor="end" class="foot">Entorno simplificado e fora de escala</text>
+</svg>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 660" width="1200" height="660" role="img" aria-labelledby="svg-title svg-desc">
+  <title id="svg-title">Comparacao geometrica de assistencia de tracado em realidade virtual</title>
+  <desc id="svg-desc">Diagrama comparando guia de tracado em canvas suspenso a 1,20 m contra guia projetada sobre o boneco a 4,00 m, destacando angulo visual, oclusao e autonomia.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f7f4ec; }
+      .panel { fill: #ffffff; stroke: #2b3a3a; stroke-width: 2; rx: 10; }
+      .header-a { fill: #1a302f; }
+      .header-b { fill: #4a2a23; }
+      .h-title { font-family: "Segoe UI", Arial, sans-serif; font-size: 18px; font-weight: 700; fill: #f8f4e6; }
+      .h-sub { font-family: "Segoe UI", Arial, sans-serif; font-size: 12.5px; fill: #efbf71; }
+      .label { font-family: "Segoe UI", Arial, sans-serif; font-size: 13px; font-weight: 600; fill: #1c2424; }
+      .note { font-family: "Segoe UI", Arial, sans-serif; font-size: 12px; fill: #425252; }
+      .metric { font-family: "Consolas", "Courier New", monospace; font-size: 12px; font-weight: 700; fill: #1a302f; }
+      .warn { font-family: "Segoe UI", Arial, sans-serif; font-size: 12px; font-weight: 700; fill: #9b2226; }
+      .ok { font-family: "Segoe UI", Arial, sans-serif; font-size: 12px; font-weight: 700; fill: #1b6b45; }
+      .floor { stroke: #6b705c; stroke-width: 2.5; }
+      .axis { stroke: #9fb0ad; stroke-width: 1; stroke-dasharray: 4 4; }
+      .fov { fill: #fff3cc; fill-opacity: 0.45; stroke: #d4a017; stroke-width: 1.5; stroke-dasharray: 6 4; }
+      .fov-warn { fill: #fde2e1; fill-opacity: 0.5; stroke: #c1121f; stroke-width: 1.5; stroke-dasharray: 6 4; }
+      .canvas-a { fill: #8b3dff; fill-opacity: 0.16; stroke: #6a1fd9; stroke-width: 2.5; }
+      .canvas-b-small { fill: #2be84a; fill-opacity: 0.20; stroke: #1a8a2e; stroke-width: 2; }
+      .canvas-b-large { fill: #e6192e; fill-opacity: 0.15; stroke: #b5171e; stroke-width: 2.5; stroke-dasharray: 5 3; }
+      .dummy { fill: #d4a373; stroke: #5c4028; stroke-width: 2; }
+      .player { fill: #264653; stroke: #172a33; stroke-width: 2; }
+      .wand { stroke: #5c3a21; stroke-width: 3.5; stroke-linecap: round; }
+      .aim { stroke: #d4a017; stroke-width: 2; stroke-dasharray: 7 4; }
+      .badge-ok { fill: #e8f5ee; stroke: #1b6b45; stroke-width: 1.5; }
+      .badge-warn { fill: #fdecea; stroke: #9b2226; stroke-width: 1.5; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1a302f"/>
+    </marker>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#6a1fd9"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1200" height="660"/>
+  <text x="600" y="34" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="21" font-weight="700" fill="#1a302f">
+    Comparacao de Assistencia de Tracado: Canvas Suspenso no Ar vs. Guia no Boneco
+  </text>
+  <text x="600" y="55" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="#4a5a5a">
+    Analise geometrica no corte longitudinal do campo de treino (escala proporcional em metros: origem em Z = 0, alvo em Z = -4,00 m)
+  </text>
+
+  <!-- PAINEL A -->
+  <g transform="translate(30, 74)">
+    <rect class="panel" x="0" y="0" width="555" height="556" rx="10"/>
+    <path class="header-a" d="M 10 0 H 545 A 10 10 0 0 1 555 10 V 58 H 0 V 10 A 10 10 0 0 1 10 0 Z"/>
+    <text class="h-title" x="20" y="27">A · Guia em Canvas Suspenso (Z = -1,20 m)</text>
+    <text class="h-sub" x="20" y="47">Alta legibilidade angular, baixo conflito de foco e visao preservada ao desvanecer</text>
+
+    <!-- Area de corte A -->
+    <line class="axis" x1="40" y1="245" x2="520" y2="245"/>
+    <text class="note" x="45" y="238">Y = 1,60 m (olhos)</text>
+    <line class="floor" x1="40" y1="385" x2="520" y2="385"/>
+    <text class="metric" x="72" y="405">Z = 0,00 m</text>
+    <text class="metric" x="180" y="405">Z = -1,20 m</text>
+    <text class="metric" x="430" y="405">Z = -4,00 m</text>
+
+    <!-- Cone visual ate canvas A -->
+    <polygon class="fov" points="95,245 215,252 215,302"/>
+    <text class="metric" x="122" y="294">~21,2 deg</text>
+
+    <!-- Linha de visao livre ate o boneco -->
+    <line x1="95" y1="245" x2="465" y2="280" stroke="#2a9d8f" stroke-width="2" stroke-dasharray="4 3"/>
+    <text class="ok" x="290" y="253">Visao livre ate o torso</text>
+
+    <!-- Jogador -->
+    <rect class="player" x="80" y="268" width="30" height="117" rx="8"/>
+    <circle class="player" cx="95" cy="245" r="16"/>
+    <line class="wand" x1="106" y1="298" x2="142" y2="290"/>
+    <circle cx="142" cy="290" r="3.5" fill="#fff1ac" stroke="#b5830a" stroke-width="1"/>
+    <line class="aim" x1="142" y1="290" x2="455" y2="285"/>
+    <text class="note" x="62" y="425">Jogador + Varinha</text>
+
+    <!-- Canvas suspenso a 1,20 m -->
+    <rect class="canvas-a" x="208" y="248" width="14" height="54" rx="3"/>
+    <line x1="215" y1="302" x2="215" y2="385" class="axis"/>
+    <text class="label" x="155" y="180">Canvas 0,45 x 0,45 m</text>
+    <text class="note" x="155" y="198">Translucido + fade ao desenhar</text>
+    <line x1="215" y1="205" x2="215" y2="244" stroke="#6a1fd9" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+
+    <!-- Mini detalhe frontal do canvas A -->
+    <g transform="translate(262, 102)">
+      <rect x="0" y="0" width="122" height="102" rx="8" fill="#faf7ff" stroke="#6a1fd9" stroke-width="1.8"/>
+      <text class="metric" x="61" y="17" text-anchor="middle">Vista frontal (21,2 deg)</text>
+      <path d="M 38 78 L 78 78 C 52 78, 42 66, 46 50 C 50 36, 74 34, 84 36" fill="none" stroke="#8b3dff" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow-purple)"/>
+      <circle cx="38" cy="78" r="5" fill="#1b6b45"/>
+      <text class="note" x="38" y="94" text-anchor="middle">Inicio (1)</text>
+    </g>
+
+    <!-- Boneco em Z = -4,00 m -->
+    <g transform="translate(465, 222)">
+      <line x1="0" y1="125" x2="0" y2="163" stroke="#5c4028" stroke-width="5"/>
+      <rect class="dummy" x="-26" y="158" width="52" height="5" rx="2"/>
+      <rect class="dummy" x="-18" y="45" width="36" height="80" rx="5"/>
+      <rect class="dummy" x="-36" y="52" width="72" height="14" rx="4"/>
+      <circle class="dummy" cx="0" cy="24" r="15"/>
+      <circle cx="0" cy="72" r="5" fill="#e6192e"/>
+    </g>
+    <text class="note" x="430" y="425">Alvo (Y = 1,20 m)</text>
+
+    <!-- Sintese Painel A -->
+    <rect class="badge-ok" x="24" y="446" width="507" height="92" rx="8"/>
+    <text class="ok" x="40" y="469">Vantagens observadas no recorte geometrico:</text>
+    <text class="note" x="40" y="490">1. Ocupa ~21 deg no campo visual sem precisar exagerar a escala fisica.</text>
+    <text class="note" x="40" y="508">2. Fica proximo ao plano real da mao (#wand-tip) e nao depende do boneco estar a frente.</text>
+    <text class="note" x="40" y="526">3. Desvanece ao iniciar o traco, liberando o campo de visao para a reacao do impacto.</text>
+  </g>
+
+  <!-- PAINEL B -->
+  <g transform="translate(615, 74)">
+    <rect class="panel" x="0" y="0" width="555" height="556" rx="10"/>
+    <path class="header-b" d="M 10 0 H 545 A 10 10 0 0 1 555 10 V 58 H 0 V 10 A 10 10 0 0 1 10 0 Z"/>
+    <text class="h-title" x="20" y="27">B · Guia Projetada sobre o Boneco (Z = -4,00 m)</text>
+    <text class="h-sub" x="20" y="47">Dilema entre perda de legibilidade (pequena) e oclusao do alvo (ampliada)</text>
+
+    <!-- Area de corte B -->
+    <line class="axis" x1="40" y1="245" x2="520" y2="245"/>
+    <text class="note" x="45" y="238">Y = 1,60 m (olhos)</text>
+    <line class="floor" x1="40" y1="385" x2="520" y2="385"/>
+    <text class="metric" x="72" y="405">Z = 0,00 m</text>
+    <text class="metric" x="425" y="405">Z = -4,00 m</text>
+
+    <!-- Cone visual ate boneco (grande oclusao vs pequena) -->
+    <polygon class="fov-warn" points="95,245 450,218 450,350"/>
+    <text class="warn" x="215" y="234">Mesmo angulo (~20 deg) exige ~1,40 m no alvo</text>
+    <text class="metric" x="240" y="308">0,45 m a 4 m = apenas ~6,4 deg</text>
+
+    <!-- Jogador -->
+    <rect class="player" x="80" y="268" width="30" height="117" rx="8"/>
+    <circle class="player" cx="95" cy="245" r="16"/>
+    <line class="wand" x1="106" y1="298" x2="142" y2="290"/>
+    <circle cx="142" cy="290" r="3.5" fill="#fff1ac" stroke="#b5830a" stroke-width="1"/>
+    <line class="aim" x1="142" y1="290" x2="455" y2="285"/>
+    <text class="note" x="62" y="425">Jogador + Varinha</text>
+
+    <!-- Boneco + duas sobreposicoes em Z = -4,00 m -->
+    <g transform="translate(465, 222)">
+      <line x1="0" y1="125" x2="0" y2="163" stroke="#5c4028" stroke-width="5"/>
+      <rect class="dummy" x="-26" y="158" width="52" height="5" rx="2"/>
+      <rect class="dummy" x="-18" y="45" width="36" height="80" rx="5"/>
+      <rect class="dummy" x="-36" y="52" width="72" height="14" rx="4"/>
+      <circle class="dummy" cx="0" cy="24" r="15"/>
+      <!-- Guia grande (1,40 m) cobrindo todo o boneco -->
+      <rect class="canvas-b-large" x="-44" y="-4" width="88" height="132" rx="6"/>
+      <!-- Guia pequena (0,45 m) no peito -->
+      <rect class="canvas-b-small" x="-14" y="56" width="28" height="28" rx="3"/>
+    </g>
+
+    <!-- Legendas do dilema -->
+    <g transform="translate(245, 96)">
+      <rect x="0" y="0" width="280" height="106" rx="8" fill="#fff9f9" stroke="#b5171e" stroke-width="1.5"/>
+      <text class="warn" x="12" y="22">Dilema optico-espacial no alvo:</text>
+      <text class="note" x="12" y="44">- Se 0,45 m (~6,4 deg): setas ilegíveis a 4 m.</text>
+      <text class="note" x="12" y="64">- Se 1,40 m (~19,9 deg): cobre torso e cabeca,</text>
+      <text class="note" x="18" y="80">mascarando animacoes de impacto/desarme.</text>
+      <text class="note" x="12" y="98">- Falha se o jogador olhar para os lados (RF-MVP-03).</text>
+    </g>
+
+    <!-- Sintese Painel B -->
+    <rect class="badge-warn" x="24" y="446" width="507" height="92" rx="8"/>
+    <text class="warn" x="40" y="469">Limitacoes observadas para o campo de treino:</text>
+    <text class="note" x="40" y="490">1. Oclui reacoes fisicas (levitacao, explosao, contracao e varinha ejetada).</text>
+    <text class="note" x="40" y="508">2. Induz mira acoplada ao olhar e cria dependencia de um alvo fixo para desenhar.</text>
+    <text class="note" x="40" y="526">3. Desincentiva o uso do grimorio diegetico (RF-MVP-04) na mao secundaria.</text>
+  </g>
+</svg>
