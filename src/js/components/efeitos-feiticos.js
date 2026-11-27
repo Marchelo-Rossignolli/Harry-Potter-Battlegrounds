@@ -407,8 +407,8 @@
 
     /**
      * Testa interseção do raio (origin, direction) contra o volume do boneco (#training-dummy).
-     * Combina THREE.Raycaster nas malhas 3D do boneco com cilindro delimitador robusto
-     * para garantir detecção confiável tanto no PC quanto no Quest.
+     * Usa THREE.Raycaster nas malhas 3D do boneco; o cilindro delimitador só substitui
+     * a malha enquanto o modelo não estiver carregado.
      */
     testDummyHit(origin, direction, maxDistance = MAX_RAY_DISTANCE) {
       const dummyEl = this.getDummyEl();
@@ -443,7 +443,11 @@
         }
       }
 
-      // 2. Volume cilíndrico de colisão do boneco (raio 0.56m para braços/torso, altura 0.0..1.85m a partir da base atual do boneco)
+      // Com o modelo carregado, a malha é a referência: um disparo que a contorna erra.
+      const miss = { hit: false, distance: maxDistance, point: origin.clone().addScaledVector(direction, maxDistance) };
+      if (dummyEl.getObject3D('mesh')) return miss;
+
+      // 2. Volume cilíndrico auxiliar enquanto a malha não estiver disponível (raio 0.56m, altura 0.0..1.85m a partir da base atual do boneco)
       const cylRadius = 0.56;
       const minY = dummyPos.y - 0.05;
       const maxY = dummyPos.y + 1.85;
@@ -477,11 +481,7 @@
         }
       }
 
-      return {
-        hit: false,
-        distance: maxDistance,
-        point: origin.clone().addScaledVector(direction, maxDistance)
-      };
+      return miss;
     },
 
     /**

@@ -26,6 +26,12 @@
         if (this.isCanvas(event.target)) event.preventDefault();
       };
       this.onFireClick = () => this.fire();
+      this.onBlur = () => {
+        // Sem a soltura do botão, o traço é descartado em vez de confirmado.
+        const drawing = this.pointer?.dragging;
+        this.cancel();
+        if (drawing) this.tracado()?.cancelarMesa();
+      };
       this.cancel = () => {
         this.pointer = null;
         this.el.classList.remove('desenhando');
@@ -47,7 +53,7 @@
       window.addEventListener('mousemove', this.onMouseMove);
       window.addEventListener('mouseup', this.onMouseUp);
       window.addEventListener('keydown', this.onKeyDown);
-      window.addEventListener('blur', this.onMouseUp);
+      window.addEventListener('blur', this.onBlur);
       window.addEventListener('contextmenu', this.onContextMenu);
       this.fireButton?.addEventListener('click', this.onFireClick);
       this.el.addEventListener('enter-vr', this.cancel);
@@ -63,7 +69,7 @@
       window.removeEventListener('mousemove', this.onMouseMove);
       window.removeEventListener('mouseup', this.onMouseUp);
       window.removeEventListener('keydown', this.onKeyDown);
-      window.removeEventListener('blur', this.onMouseUp);
+      window.removeEventListener('blur', this.onBlur);
       window.removeEventListener('contextmenu', this.onContextMenu);
       this.fireButton?.removeEventListener('click', this.onFireClick);
       this.el.removeEventListener('enter-vr', this.cancel);
@@ -86,6 +92,10 @@
       // Impede que o look-controls gire a câmera durante o traço.
       event.stopPropagation();
       event.preventDefault();
+      // O preventDefault mantém o foco no último botão clicado; sem isso, Espaço o acionaria.
+      const focused = document.activeElement;
+      if (focused && focused !== document.body && focused !== this.el.canvas) focused.blur();
+      this.el.canvas.focus?.({preventScroll: true});
       this.pointer = {button: event.button, x: event.clientX, y: event.clientY, dragging: false};
     },
 
@@ -106,12 +116,12 @@
 
     onMouseUp(event) {
       const pointer = this.pointer;
-      if (!pointer || (event.type === 'mouseup' && event.button !== pointer.button)) return;
+      if (!pointer || event.button !== pointer.button) return;
       this.cancel();
       if (pointer.dragging) {
-        if (event.type === 'mouseup') this.project(event.clientX, event.clientY);
+        this.project(event.clientX, event.clientY);
         this.tracado()?.tracarMesa(this.point, false, event.timeStamp);
-      } else if (pointer.button === 2 && event.type === 'mouseup') {
+      } else if (pointer.button === 2) {
         this.fire();
       }
     },

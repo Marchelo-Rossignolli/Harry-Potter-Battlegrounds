@@ -189,12 +189,13 @@
 
     // Etapa comum ao controle e ao mouse: this.position já contém o ponto atual.
     // Retorna true quando a soltura consumiu o quadro (disparo ou reconhecimento).
-    updateStroke(pressed, pressedNow, time) {
+    // O toque curto como disparo vale só para o controle XR; no mouse, quem decide é tracado-mesa.
+    updateStroke(pressed, pressedNow, time, allowTap = true) {
       if (pressedNow) this.beginStroke(time);
       if (!this.drawing) return false;
       this.sampleStroke();
       // Enquanto ainda puder ser toque de disparo, preserve a magia armada.
-      const tap = time - this.started < TAP_MS && this.distance < TAP_METERS;
+      const tap = allowTap && time - this.started < TAP_MS && this.distance < TAP_METERS;
       if (this.armed && !tap) {
         this.armed = null;
         this.el.emit('feitico-cancelado', {}, false);
@@ -221,7 +222,15 @@
       const pressedNow = pressed && !this.drawing;
       if (!pressed && !this.drawing) return;
       this.position.copy(point);
-      this.updateStroke(pressed, pressedNow, time);
+      this.updateStroke(pressed, pressedNow, time, false);
+    },
+
+    // Interrompe um traço do mouse sem reconhecê-lo (perda de foco da janela).
+    cancelarMesa() {
+      if (!this.drawing) return;
+      // A magia armada já foi cancelada no início do arrasto; aqui só se descarta o traço.
+      this.clearStroke();
+      this.el.emit('feitico-falhou', {motivo: 'Traçado interrompido.'}, false);
     },
 
     dispararMesa() {

@@ -352,8 +352,11 @@
         maxRoll: (Math.random() - 0.5) * 0.18
       };
 
-      const localImpact = worldHitPoint.clone().sub(this.basePos);
-      localImpact.y = THREE.MathUtils.clamp(localImpact.y, 0.5, 1.65);
+      // Ponto real de contato no espaço do grupo de efeitos; os limites acompanham a levitação.
+      this.worldFxGroup.updateWorldMatrix(true, false);
+      const localImpact = this.worldFxGroup.worldToLocal(worldHitPoint.clone());
+      const lift = this.dummyEl ? this.dummyEl.object3D.position.y - this.basePos.y : 0;
+      localImpact.y = THREE.MathUtils.clamp(localImpact.y, 0.5 + lift, 1.65 + lift);
       localImpact.z = THREE.MathUtils.clamp(localImpact.z, -0.35, 0.45);
 
       const explosionGroup = new THREE.Group();
