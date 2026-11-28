@@ -13,6 +13,7 @@
   <script src="js/components/alvo-boneco.js"></script>
   <script src="js/components/controle-varinha.js"></script>
   <script src="js/components/tracado-mesa.js"></script>
+  <script src="js/components/grimorio.js"></script>
 </head>
 <body>
   <aside aria-label="Controles do campo de treino">
@@ -22,6 +23,7 @@
       <li><kbd>Botão direito</kbd> ou <kbd>Shift</kbd>+<kbd>arrastar</kbd> desenha</li>
       <li><kbd>Arrastar</kbd> olha · <kbd>Setas</kbd> giram a varinha</li>
       <li><kbd>Espaço</kbd> ou clique direito dispara</li>
+      <li><kbd>Q</kbd> e <kbd>E</kbd> folheiam o grimório · <kbd>G</kbd> mostra ou oculta</li>
     </ul>
     <ol class="tracados" aria-label="Traçados dos feitiços">
       <li><img src="assets/textures/tracados/levioso.png" alt="">Levioso</li>
@@ -71,7 +73,7 @@
           <a-text position="0 0 0.01" align="center" color="#f8f4e6" width="1.05" wrap-count="30"></a-text>
         </a-entity>
         <a-entity id="vr-menu" position="0 -0.36 -1.4" visible="false">
-          <a-plane width="1.4" height="0.68" material="shader: flat; color: #1a302f; fog: false"></a-plane>
+          <a-plane position="0 -0.035 0" width="1.4" height="0.75" material="shader: flat; color: #1a302f; fog: false"></a-plane>
           <a-text position="0 0.245 0.01" align="center" color="#efbf71" width="1.28"
                   wrap-count="40" value="Aperte o gatilho da mão que vai usar."></a-text>
           <a-image src="assets/textures/tracados/levioso.png" position="-0.45 0.095 0.012" width="0.15" height="0.15"></a-image>
@@ -86,6 +88,8 @@
                   wrap-count="52" value="Segure o gatilho e desenhe. Solte, aponte e aperte o Grip ou toque no gatilho."></a-text>
           <a-text position="0 -0.265 0.01" align="center" color="#efbf71" width="1.18"
                   wrap-count="44" value="Reabrir: Menu ou Y no controle esquerdo."></a-text>
+          <a-text position="0 -0.34 0.01" align="center" color="#f8f4e6" width="1.18"
+                  wrap-count="44" value="Livro: X ou A vira a folha. Pressione o stick para voltar."></a-text>
         </a-entity>
       </a-entity>
       <a-entity id="wand-hand" controle-varinha>
@@ -96,6 +100,7 @@
           </a-entity>
         </a-entity>
       </a-entity>
+      <a-entity id="grimorio" grimorio></a-entity>
     </a-entity>
   </a-scene>
 </body>
